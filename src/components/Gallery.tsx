@@ -1,71 +1,96 @@
 import { FC, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import photo1 from "../assets/photos/0.jpg";
+import photo2 from "../assets/photos/1.jpg";
+import photo3 from "../assets/photos/2.jpg";
+import photo4 from "../assets/photos/3.jpg";
+import photo5 from "../assets/photos/4.jpg";
+import photo6 from "../assets/photos/5.jpg";
+import photo7 from "../assets/photos/6.jpg";
+import photo8 from "../assets/photos/7.jpg";
+import photo10 from "../assets/photos/9.jpg";
+import photo11 from "../assets/photos/10.jpg";
+import photo12 from "../assets/photos/11.jpg";
+import photos13 from "../assets/photos/12.jpg";
 
 const photos = [
-  {
-    src: "../assets/photos/1.HEIC",
-    caption: "A moment that changed everything ❤️",
-  },
-  {
-    src: "../assets/photos/2.HEIC",
-    caption: "Your smile became my favorite place 😊",
-  },
-  {
-    src: "../assets/photos/3.HEIC",
-    caption: "Memories I want forever ✈️",
-  },
+  { src: photo1, caption: "A moment that changed everything ❤️" },
+  { src: photo2, caption: "Your smile became my favorite place 😊" },
+  { src: photo3, caption: "Memories I want forever ✈️" },
+  { src: photo4, caption: "Adventures we took together 🌍" },
+  { src: photo5, caption: "Golden moments with you 🌟" },
+  { src: photo6, caption: "Laughter echoes in my heart 😄" },
+  { src: photo7, caption: "Every moment with you is special 💫" },
+  { src: photo8, caption: "Our story in a single frame 📖" },
+  { src: photo10, caption: "Forever grateful for you 🙏" },
+  { src: photo11, caption: "You make everything beautiful ✨" },
+  { src: photo12, caption: "Here's to many more memories with you 🎉" },
+  { src: photos13, caption: "The best is yet to come with you 💖" },
 ];
 
 interface GalleryProps {
   onFinish: () => void;
 }
 
-const Gallery: FC<GalleryProps> = ({ onFinish }) => {  
+const Gallery: FC<GalleryProps> = ({ onFinish }) => {
   const [index, setIndex] = useState(0);
-const next = () => {
-  if (index === photos.length - 1) {
-    onFinish(); // move to next phase
-  } else {
-    setIndex((prev) => prev + 1);
-  }
-};  
-const prev = () => {
-  setIndex((prev) => (prev - 1 + photos.length) % photos.length);
-};
+
+  const next = () => {
+    if (index === photos.length - 1) {
+      onFinish();
+    } else {
+      setIndex((prev) => prev + 1);
+    }
+  };
+
+  const prev = () => {
+    setIndex((prev) => (prev - 1 + photos.length) % photos.length);
+  };
 
   return (
     <div
       style={{
         width: "100vw",
-        height: "100vh",
+        height: "100dvh", // mobile safe viewport
         overflow: "hidden",
-        position: "relative",
+        position: "fixed", // prevents scroll
+        top: 0,
+        left: 0,
         background: "black",
       }}
     >
+      {/* Swipe instruction */}
       <motion.div
-  initial={{ opacity: 0 }}
-  animate={{ opacity: [0, 1, 1, 0] }}
-  transition={{ duration: 100, times: [0, 0.2, 0.8, 1] }}
-  style={{
-    position: "absolute",
-    top: "100px",
-    width: "100%",
-    textAlign: "center",
-    color: "white",
-    fontFamily: "Great Vibes, cursive",
-    fontSize: "1.3rem",
-    textShadow: "0 0 15px rgba(0,0,0,0.8)",
-  }}
->
-  👈 Swipe to explore memories 👉
-</motion.div>
-      {/* 🌸 Petal Rain */}
-      {Array.from({ length: 10 }).map((_, i) => (
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 10, times: [0, 0.2, 0.8, 1] }}
+        style={{
+          position: "absolute",
+          top: "10%",
+          width: "100%",
+          textAlign: "center",
+          color: "white",
+          fontFamily: "Great Vibes, cursive",
+          fontSize: "clamp(1rem, 4vw, 1.4rem)",
+          textShadow: "0 0 15px rgba(0,0,0,0.8)",
+          zIndex: 10,
+        }}
+      >
+        👈 Swipe to explore memories 👉
+      </motion.div>
+
+      {/* Petal rain */}
+      {Array.from({ length: 12 }).map((_, i) => (
         <motion.span
           key={i}
-          initial={{ y: "-10vh", x: Math.random() * window.innerWidth }}
-          animate={{ y: "110vh", rotate: 180 }}
+          initial={{
+            y: -100,
+            left: `${Math.random() * 100}%`,
+          }}
+          animate={{
+            y: "110vh",
+            rotate: 180,
+          }}
           transition={{
             repeat: Infinity,
             duration: 10 + Math.random() * 5,
@@ -73,14 +98,15 @@ const prev = () => {
           }}
           style={{
             position: "absolute",
-            fontSize: "1.2rem",
+            fontSize: "clamp(0.8rem, 2vw, 1.2rem)",
+            pointerEvents: "none",
           }}
         >
           🌸
         </motion.span>
       ))}
 
-      {/* 🎥 Light Leak Overlay */}
+      {/* Light cinematic overlay */}
       <motion.div
         animate={{ opacity: [0.2, 0.4, 0.2] }}
         transition={{ repeat: Infinity, duration: 6 }}
@@ -93,7 +119,7 @@ const prev = () => {
         }}
       />
 
-      {/* 📸 Image Scene */}
+      {/* Image */}
       <AnimatePresence mode="wait">
         <motion.img
           key={photos[index].src}
@@ -107,38 +133,37 @@ const prev = () => {
           initial={{ opacity: 0, scale: 1.2 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.5 }}
+          transition={{ duration: 1.2 }}
           style={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
             cursor: "grab",
+            userSelect: "none",
           }}
         />
       </AnimatePresence>
 
-      {/* 💖 Caption */}
+      {/* Caption */}
       <motion.p
         key={photos[index].caption}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
+        transition={{ delay: 0.8 }}
         style={{
           position: "absolute",
-          bottom: "40px",
+          bottom: "5%",
           width: "100%",
           textAlign: "center",
           color: "white",
           fontFamily: "Great Vibes, cursive",
-          fontSize: "2rem",
+          fontSize: "clamp(1.3rem, 5vw, 2rem)",
+          padding: "0 20px",
           textShadow: "0 0 20px rgba(0,0,0,0.8)",
         }}
       >
         {photos[index].caption}
       </motion.p>
-
-      
-      
     </div>
   );
 };

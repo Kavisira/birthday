@@ -44,7 +44,6 @@ const Intro: FC<IntroProps> = ({ onComplete, startMusic }) => {
     if (!experienceStarted) return;
 
     if (lineIndex >= lines.length) {
-      // setShowButton(true);
       setTimeout(() => {
         onComplete();
       }, 800);
@@ -89,9 +88,11 @@ const Intro: FC<IntroProps> = ({ onComplete, startMusic }) => {
       }}
       style={{
         width: "100vw",
-        height: "100vh",
+        height: "100dvh", // mobile safe height
         overflow: "hidden",
-        position: "relative",
+        position: "fixed", // prevents scroll
+        top: 0,
+        left: 0,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -100,7 +101,7 @@ const Intro: FC<IntroProps> = ({ onComplete, startMusic }) => {
           "linear-gradient(-45deg,#ff9a9e,#fad0c4,#fbc2eb,#a6c1ee)",
         backgroundSize: "400% 400%",
         textAlign: "center",
-        padding: "2rem",
+        padding: "1.5rem",
       }}
     >
       {/* tap instruction */}
@@ -110,8 +111,9 @@ const Intro: FC<IntroProps> = ({ onComplete, startMusic }) => {
           transition={{ repeat: Infinity, duration: 2 }}
           style={{
             color: "white",
-            fontSize: "1.5rem",
+            fontSize: "clamp(1.3rem, 5vw, 1.8rem)", // responsive font
             fontFamily: "Great Vibes, cursive",
+            maxWidth: "90%",
           }}
         >
           Tap anywhere to begin ❤️
@@ -123,9 +125,11 @@ const Intro: FC<IntroProps> = ({ onComplete, startMusic }) => {
         <motion.p
           style={{
             fontFamily: "Great Vibes, cursive",
-            fontSize: "2.3rem",
+            fontSize: "clamp(1.6rem, 5vw, 2.4rem)", // responsive text
             color: "white",
             textShadow: "0 0 20px rgba(0,0,0,0.7)",
+            maxWidth: "90%",
+            lineHeight: 1.4,
           }}
         >
           {text}

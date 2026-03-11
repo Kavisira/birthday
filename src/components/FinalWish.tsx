@@ -28,9 +28,11 @@ const FinalMessage: FC = () => {
     <div
       style={{
         width: "100vw",
-        height: "100vh",
+        height: "100dvh", // mobile safe height
         overflow: "hidden",
-        position: "relative",
+        position: "fixed", // prevent scroll
+        top: 0,
+        left: 0,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -39,7 +41,7 @@ const FinalMessage: FC = () => {
         backgroundSize: "400% 400%",
         animation: "gradientMove 12s ease infinite",
         textAlign: "center",
-        padding: "2rem",
+        padding: "1.5rem",
       }}
     >
       {/* ❤️ Heart Pulse Background */}
@@ -48,7 +50,7 @@ const FinalMessage: FC = () => {
         transition={{ repeat: Infinity, duration: 2 }}
         style={{
           position: "absolute",
-          fontSize: "8rem",
+          fontSize: "6rem",
           color: "rgba(255,255,255,0.2)",
         }}
       >
@@ -59,7 +61,7 @@ const FinalMessage: FC = () => {
       {Array.from({ length: 10 }).map((_, i) => (
         <motion.span
           key={i}
-          initial={{ y: "-10vh", x: Math.random() * window.innerWidth }}
+          initial={{ y: -120, left: `${Math.random() * 100}%` }}
           animate={{ y: "110vh", rotate: 180 }}
           transition={{
             repeat: Infinity,
@@ -68,7 +70,8 @@ const FinalMessage: FC = () => {
           }}
           style={{
             position: "absolute",
-            fontSize: "1.2rem",
+            fontSize: "clamp(0.8rem,2vw,1.2rem)",
+            pointerEvents: "none",
           }}
         >
           🌸
@@ -84,7 +87,8 @@ const FinalMessage: FC = () => {
           style={{
             position: "absolute",
             left: `${Math.random() * 100}%`,
-            fontSize: "1.5rem",
+            fontSize: "clamp(1rem,2.5vw,1.5rem)",
+            pointerEvents: "none",
           }}
         >
           🎈
@@ -110,10 +114,12 @@ const FinalMessage: FC = () => {
         animate={{ opacity: 1 }}
         style={{
           fontFamily: "Great Vibes, cursive",
-          fontSize: "2.5rem",
+          fontSize: "clamp(1.6rem,5vw,2.5rem)", // responsive
           color: "white",
           textShadow: "0 0 20px rgba(0,0,0,0.7)",
           zIndex: 2,
+          maxWidth: "90%",
+          lineHeight: 1.4,
         }}
       >
         {text}
@@ -126,8 +132,8 @@ const FinalMessage: FC = () => {
         transition={{ delay: 4 }}
         style={{
           position: "absolute",
-          bottom: "80px",
-          fontSize: "3rem",
+          bottom: "8%",
+          fontSize: "clamp(2rem,5vw,3rem)",
         }}
       >
         🎂
@@ -143,7 +149,8 @@ const FinalMessage: FC = () => {
             position: "absolute",
             top: `${Math.random() * 100}%`,
             left: `${Math.random() * 100}%`,
-            fontSize: "1.2rem",
+            fontSize: "clamp(0.8rem,2vw,1.2rem)",
+            pointerEvents: "none",
           }}
         >
           ✨
