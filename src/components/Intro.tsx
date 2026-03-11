@@ -1,4 +1,5 @@
-import { FC, useEffect, useState, useRef } from "react";
+import type { FC } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import typeSound from "../assets/type.mp3";
 
@@ -21,11 +22,9 @@ const lines = [
   "It is the day my happiness was born…",
 ];
 
-const Intro: FC<IntroProps> = ({ onComplete, startMusic }) => {
+const Intro: FC<IntroProps> = ({ onComplete }) => {
   const [text, setText] = useState("");
   const [lineIndex, setLineIndex] = useState(0);
-  const [showButton, setShowButton] = useState(false);
-  const [burst, setBurst] = useState(false);
 
   const [experienceStarted, setExperienceStarted] = useState(false);
 
@@ -77,7 +76,7 @@ const Intro: FC<IntroProps> = ({ onComplete, startMusic }) => {
     }, 55);
 
     return () => clearInterval(interval);
-  }, [lineIndex, experienceStarted]);
+  }, [lineIndex, experienceStarted, onComplete]);
 
   return (
     <div

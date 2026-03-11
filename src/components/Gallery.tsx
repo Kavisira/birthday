@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import type { FC } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import photo1 from "../assets/photos/0.jpg";
 import photo2 from "../assets/photos/1.jpg";
@@ -12,6 +13,16 @@ import photo10 from "../assets/photos/9.jpg";
 import photo11 from "../assets/photos/10.jpg";
 import photo12 from "../assets/photos/11.jpg";
 import photos13 from "../assets/photos/12.jpg";
+
+// Generate random petal data once at module load
+const generatePetalData = () =>
+  Array.from({ length: 12 }).map(() => ({
+    left: Math.random() * 100,
+    duration: 10 + Math.random() * 5,
+    delay: Math.random() * 5,
+  }));
+
+const staticPetalData = generatePetalData();
 
 const photos = [
   { src: photo1, caption: "A moment that changed everything ❤️" },
@@ -80,12 +91,12 @@ const Gallery: FC<GalleryProps> = ({ onFinish }) => {
       </motion.div>
 
       {/* Petal rain */}
-      {Array.from({ length: 12 }).map((_, i) => (
+      {staticPetalData.map((petal, i) => (
         <motion.span
           key={i}
           initial={{
             y: -100,
-            left: `${Math.random() * 100}%`,
+            left: `${petal.left}%`,
           }}
           animate={{
             y: "110vh",
@@ -93,8 +104,8 @@ const Gallery: FC<GalleryProps> = ({ onFinish }) => {
           }}
           transition={{
             repeat: Infinity,
-            duration: 10 + Math.random() * 5,
-            delay: Math.random() * 5,
+            duration: petal.duration,
+            delay: petal.delay,
           }}
           style={{
             position: "absolute",
@@ -126,7 +137,7 @@ const Gallery: FC<GalleryProps> = ({ onFinish }) => {
           src={photos[index].src}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
-          onDragEnd={(e, info) => {
+          onDragEnd={(_e, info) => {
             if (info.offset.x < -50) next();
             if (info.offset.x > 50) prev();
           }}

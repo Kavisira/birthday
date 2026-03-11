@@ -90,6 +90,7 @@ function App() {
                 startMusic();
                 setShowGallery(true);
               }}
+              startMusic={startMusic}
             />
           </motion.div>
         ) : !showFinal ? (

@@ -1,5 +1,15 @@
-import { FC, useState } from "react";
+import type { FC } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
+
+// Generate random heart data once at module load
+const generateHeartData = () =>
+  Array.from({ length: 6 }).map(() => ({
+    top: Math.random() * 100,
+    left: Math.random() * 100,
+  }));
+
+const staticHeartData = generateHeartData();
 
 const memories = [
   {
@@ -61,15 +71,15 @@ const Timeline: FC<TimelineProps> = ({ onNext }) => {
       />
 
       {/* Floating Hearts */}
-      {Array.from({ length: 6 }).map((_, i) => (
+      {staticHeartData.map((heart, i) => (
         <motion.span
           key={i}
           animate={{ y: [-15, 15, -15], opacity: [0.3, 0.7, 0.3] }}
           transition={{ repeat: Infinity, duration: 4 + i }}
           style={{
             position: "absolute",
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
+            top: `${heart.top}%`,
+            left: `${heart.left}%`,
             fontSize: "1.2rem",
           }}
         >

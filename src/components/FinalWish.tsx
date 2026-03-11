@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react";
+import type { FC } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import confetti from "canvas-confetti";
 
 const message =
   "Happy Birthday My Love ❤️ You are the most beautiful part of my life, and every moment with you feels magical.";
@@ -18,7 +18,10 @@ const FinalMessage: FC = () => {
     }, 40);
 
     setTimeout(() => {
-      confetti({ spread: 120, particleCount: 150 });
+      const confetti = (window as unknown as { confetti: (options: unknown) => void }).confetti;
+      if (confetti) {
+        confetti({ spread: 120, particleCount: 150 });
+      }
     }, 4000);
 
     return () => clearInterval(interval);

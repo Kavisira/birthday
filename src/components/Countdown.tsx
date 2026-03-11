@@ -1,12 +1,25 @@
-import { FC, useEffect, useState } from "react";
-import confetti from "canvas-confetti";
+import type { FC } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 const Countdown: FC = () => {
-  const targetDate = new Date("2026-03-10T00:00:00"); // 🔴 change to birthday date
+  const targetDate = useMemo(
+    () => new Date("2026-03-10T00:00:00"), // 🔴 change to birthday date
+    []
+  );
   const [timeLeft, setTimeLeft] = useState<number>(
     targetDate.getTime() - new Date().getTime()
   );
   const [celebrate, setCelebrate] = useState<boolean>(false);
+
+  const triggerConfetti = () => {
+    const confetti = (window as unknown as { confetti: (options: unknown) => void }).confetti;
+    if (confetti) {
+      confetti({
+        particleCount: 200,
+        spread: 120,
+      });
+    }
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -21,14 +34,7 @@ const Countdown: FC = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
-
-  const triggerConfetti = () => {
-    confetti({
-      particleCount: 200,
-      spread: 120,
-    });
-  };
+  }, [targetDate]);
 
   const formatTime = () => {
     if (timeLeft <= 0) return "🎉 It's Your Day 🎉";
