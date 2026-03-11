@@ -55,7 +55,9 @@ function App() {
 
         final.volume = 0;
         final.muted = false;
-        final.play().catch(() => {});
+        final.play().catch((err) => {
+          console.error("Final music play failed:", err);
+        });
 
         let finalVol = 0;
         const fadeIn = setInterval(() => {
