@@ -44,7 +44,6 @@ const FinalMessage: FC = () => {
         backgroundSize: "400% 400%",
         animation: "gradientMove 12s ease infinite",
         textAlign: "center",
-        padding: "1.5rem",
       }}
     >
       {/* ❤️ Heart Pulse Background */}
